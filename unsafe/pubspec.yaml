@@ -1,4 +1,6 @@
 name: unsafe
+environment:
+  sdk: ">=2.0.0 <3.0.0"
 dev_dependencies:
   code_buffer: ^1.0.0
   code_builder: ^3.0.0

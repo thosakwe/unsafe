@@ -11,3 +11,9 @@ int malloc(int size) native 'dart_unsafe_malloc';
 ///
 /// If ptr is a null pointer, the function does nothing.
 void free(int ptr) native 'dart_unsafe_free';
+
+/// Open a shared library.
+int dlopen(String filename, int flags) native 'dart_unsafe_dlopen';
+
+/// Close a shared library.
+int dlclose(int handle) native 'dart_unsafe_dlclose';

@@ -17,7 +17,8 @@ Dart_Handle HandleError(Dart_Handle handle)
     Dart_PropagateError(handle);
   return handle;
 }
-  '''.trim());
+  '''
+      .trim());
 
   for (var f in def.funcDefs) {
     buf
@@ -27,6 +28,7 @@ Dart_Handle HandleError(Dart_Handle handle)
 
     // Declare params
     for (var p in f.parameters) {
+      if (p.type is CStringType) buf.write('const ');
       buf.writeln('${p.type.source} ${p.name};');
     }
 
@@ -49,7 +51,6 @@ Dart_Handle HandleError(Dart_Handle handle)
             'Dart_Handle ${p.name}Handle = Dart_GetNativeArgument(arguments, $i);');
         buf.writeln(
             'HandleError(Dart_StringToCString(${p.name}Handle, &${p.name}));');
-        buf.writeln('${p.name} = (${t.source}) temp${p.name};');
       } else if (t is PointerType) {
         buf.writeln('uint64_t temp${p.name};');
         buf.writeln(

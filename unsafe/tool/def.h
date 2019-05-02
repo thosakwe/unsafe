@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <dlfcn.h>
 
 // Allocates size bytes of uninitialized storage.
 //
@@ -11,3 +12,9 @@ void* malloc(size_t size);
 //
 // If ptr is a null pointer, the function does nothing.
 void free(void* ptr);
+
+// Open a shared library.
+void* dlopen(char* filename, int flags);
+
+// Close a shared library.
+int dlclose(void* handle);
