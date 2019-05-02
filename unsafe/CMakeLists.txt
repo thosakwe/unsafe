@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.0)
-project(dart_unsafe)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 find_package(Dart REQUIRED)
 
