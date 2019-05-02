@@ -3,7 +3,7 @@ import 'ast.dart';
 
 String genDart(UnsafeDefinition def) {
   var buf = StringBuffer();
-  buf..writeln("import 'dart-ext:unsafe';")..writeln();
+  buf..writeln("import 'dart-ext:dart_unsafe';")..writeln();
 
   for (var f in def.funcDefs) {
     for (var c in f.comments) {

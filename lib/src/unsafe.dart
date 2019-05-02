@@ -1,4 +1,4 @@
-import 'dart-ext:unsafe';
+import 'dart-ext:dart_unsafe';
 
 /// Allocates size bytes of uninitialized storage.
 ///

@@ -3,16 +3,26 @@ import 'ast.dart';
 
 String genC(UnsafeDefinition def) {
   var buf = CodeBuffer();
+  buf.writeln('#include <cstring>');
   buf.writeln('#include <dart_api.h>');
 
   for (var include in def.includes) {
     buf.writeln('#include <${include.systemPath}>');
   }
 
+  buf.writeln('''
+Dart_Handle HandleError(Dart_Handle handle)
+{
+  if (Dart_IsError(handle))
+    Dart_PropagateError(handle);
+  return handle;
+}
+  '''.trim());
+
   for (var f in def.funcDefs) {
     buf
       ..writeln(' ')
-      ..writeln('void dart_unsafe_${f.name}(Dart_Native_Arguments arguments) {')
+      ..writeln('void dart_unsafe_${f.name}(Dart_NativeArguments arguments) {')
       ..indent();
 
     // Declare params
@@ -113,7 +123,7 @@ Dart_NativeFunction ResolveName(Dart_Handle name, int argc, bool *auto_setup_sco
   buf.writeln(' ');
 
   buf.writeln('''
-DART_EXPORT Dart_Handle angel_wings_Init(Dart_Handle parent_library)
+DART_EXPORT Dart_Handle dart_unsafe_Init(Dart_Handle parent_library)
 {
   if (Dart_IsError(parent_library))
     return parent_library;
@@ -124,13 +134,6 @@ DART_EXPORT Dart_Handle angel_wings_Init(Dart_Handle parent_library)
     return result_code;
 
   return Dart_Null();
-}
-
-Dart_Handle HandleError(Dart_Handle handle)
-{
-  if (Dart_IsError(handle))
-    Dart_PropagateError(handle);
-  return handle;
 }'''
       .trim());
 
